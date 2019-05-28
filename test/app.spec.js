@@ -2,9 +2,9 @@
 const app = require('../src/app');
 const supertest = require('supertest');
 describe('App', () => {
-  it('GET / responds with 200 containing "Hello, world!"', () => {
+  it('GET / responds with 200 containing object with value "Hello, world!"', () => {
     return supertest(app)
       .get('/')
-      .expect(200, 'Hello, world!');
+      .expect(200, { message: 'Hello, world!' });
   });
 });
