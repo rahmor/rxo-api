@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const loginRouter = require('./middleware/login');
+const registationRouter = require('./registration/registrationRouter');
 const { NODE_ENV } = require('./config');
 
 const app = express();
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'Hello, world!' });
 });
 app.use('/api/login', loginRouter);
+app.use('/api/register', registationRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;

@@ -1,6 +1,5 @@
 'use strict';
 const express = require('express');
-
 const loginRouter = express.Router();
 const jsonBodyParser = express.json();
 
