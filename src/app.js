@@ -13,7 +13,11 @@ const app = express();
 
 const morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
 
-const whitelist = ['http://localhost:3000', 'https://rxo-app.rahmor.now.sh/'];
+const whitelist = [
+  'http://localhost:3000',
+  'https://rxo-app.rahmor.now.sh/',
+  'http://localhost:5000'
+];
 const options = {
   origin: function(origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
