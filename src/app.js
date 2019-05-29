@@ -6,6 +6,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const loginRouter = require('./middleware/login');
 const registationRouter = require('./registration/registrationRouter');
+const prescriptionsRouter = require('./prescriptions/prescriptionsRouter');
 const { NODE_ENV } = require('./config');
 
 const app = express();
@@ -32,6 +33,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/login', loginRouter);
 app.use('/api/register', registationRouter);
+app.use('/api/prescriptions', prescriptionsRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;
