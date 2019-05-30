@@ -29,7 +29,7 @@ const options = {
 };
 
 app.use(morgan(morganOption));
-app.use(cors(options));
+app.use(cors());
 app.use(helmet());
 
 app.get('/', (req, res) => {
