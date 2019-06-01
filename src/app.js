@@ -4,8 +4,8 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
-const loginRouter = require('./middleware/login');
-const registationRouter = require('./registration/registrationRouter');
+const authRouter = require('./auth/auth-router');
+const usersRouter = require('./users/users');
 const prescriptionsRouter = require('./prescriptions/prescriptionsRouter');
 const { NODE_ENV } = require('./config');
 
@@ -35,8 +35,8 @@ app.use(helmet());
 app.get('/', (req, res) => {
   res.json({ message: 'Hello, world!' });
 });
-app.use('/api/login', loginRouter);
-app.use('/api/register', registationRouter);
+app.use('/api/login', authRouter);
+app.use('/api/register', usersRouter);
 app.use('/api/prescriptions', prescriptionsRouter);
 
 app.use(function errorHandler(error, req, res, next) {

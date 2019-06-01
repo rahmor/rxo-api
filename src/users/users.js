@@ -1,13 +1,18 @@
 'use strict';
 const express = require('express');
-const loginRouter = express.Router();
+const registrationRouter = express.Router();
 const jsonBodyParser = express.json();
 
-loginRouter.post('/', jsonBodyParser, (req, res, next) => {
+registrationRouter.post('/', jsonBodyParser, (req, res, next) => {
+  const db = req.app.get('db');
+
+  db('users')
+    .select('*')
+    .then(response => console.log(response));
   res.status(201).json(req.body);
 });
 
-module.exports = loginRouter;
+module.exports = registrationRouter;
 
 //receive response body with credentials
 //turn crentials into base 64.
@@ -17,8 +22,3 @@ module.exports = loginRouter;
 //make sure token has name
 //make sure token has password
 //make sure there is a bearer token
-
-//create database
-//add table in migrations
-//add user in seed
-// setup postgrator.config

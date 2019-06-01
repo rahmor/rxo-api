@@ -1,10 +1,12 @@
+BEGIN;
+
 TRUNCATE users, prescriptions, schedules;
 
 INSERT INTO users (user_name, user_password)
 VALUES
-  ('dunder', '$2a$12$lHK6LVpc15/ZROZcKU00QeiD.RyYq5dVlV/9m4kKYbGibkRc5l4Ne'),
-  ('b.deboop','$2a$12$VQ5HgWm34QQK2rJyLc0lmu59cy2jcZiV6U1.bE8rBBnC9VxDf/YQO'),
-  ('c.bloggs', '$2a$12$2fv9OPgM07xGnhDbyL6xsuAeQjAYpZx/3V2dnu0XNIR27gTeiK2gK');
+  ('dunder', '$2a$12$cmIaVwyCLCMa.wAN/U7uk.6hke29d9iirx4aRB2KX9G/WuQvWMQmW'),
+  ('mifflin','$2a$12$GREsE0uLMjvkOAZXP1YmruaFzMDdlTRhy/aRblRutYrQHKuxWYF8C'),
+  ('rahim', '$2a$12$fUNlEUpqOzON3W0rMdkK8.5uJ/NpGU8JXRnT69EVK9OzRIP7L1dD6');
 
 INSERT INTO prescriptions (rx_name, user_id)
 VALUES
@@ -15,3 +17,5 @@ INSERT INTO schedules (prescription_id, wednesday, nine)
 VALUES
   (1,true,true),
   (2,true,true);
+
+COMMIT;
