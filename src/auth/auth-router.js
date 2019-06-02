@@ -6,17 +6,41 @@ const AuthService = require('./auth-service');
 
 loginRouter.post('/', jsonBodyParser, (req, res, next) => {
   const { user_name, user_password } = req.body;
-  AuthService.getUsers(req.app.get('db')).then(users => console.log(users[0]));
-  res.status(201).json({ message: 'Hello, world!' });
+  const loginUser = { user_name, user_password };
+
+  for (const field of ['user_name', 'user_password']) {
+    if (!req.body[field])
+      return res
+        .status(400)
+        .json({ error: `Missing ${field} in request body` });
+  }
+
+  AuthService.getUserWithUserName(req.app.get('db'), loginUser.user_name)
+    .then(dbUser => {
+      if (!dbUser)
+        return res.status(400).json({
+          error: 'Incorrect user_name or password'
+        });
+
+      return AuthService.comparePasswords(
+        loginUser.user_password,
+        dbUser.user_password
+      ).then(compareMatch => {
+        if (!compareMatch)
+          return res.status(400).json({
+            error: 'Incorrect user_name or password'
+          });
+
+        const sub = dbUser.user_name;
+        const payload = { user_id: dbUser.id };
+        res.send({
+          authToken: AuthService.createJwt(sub, payload)
+        });
+      });
+    })
+    .catch(next);
 });
 
 module.exports = loginRouter;
 
-//receive response body with credentials
-//check for existance of all crednetial in object.
-//Check base 64 creds against database
 //if true, return jwt token as part of response
-//other return invidad token
-//make sure token has name
-//make sure token has password
-//make sure there is a bearer token
