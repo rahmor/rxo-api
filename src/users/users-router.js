@@ -4,7 +4,7 @@ const registrationRouter = express.Router();
 const jsonBodyParser = express.json();
 const UserService = require('./user-service');
 
-registrationRouter.post('/', jsonBodyParser, (req, res, next) => {
+registrationRouter.post('/', jsonBodyParser, (req, res) => {
   let { user_name, user_password } = req.body;
 
   for (const field of ['user_name', 'user_password']) {
@@ -25,16 +25,12 @@ registrationRouter.post('/', jsonBodyParser, (req, res, next) => {
     .then(password => {
       UserService.saveUser(req.app.get('db'), user_name, password).then(
         response =>
-          res
-            .status(201)
-            .json({
-              message: `Registation successful for ${response.user_name}`
-            })
+          res.status(201).json({
+            message: `Registation successful for ${response.user_name}`
+          })
       );
     })
     .catch(error => console.log(error));
 });
 
 module.exports = registrationRouter;
-
-//save request to database and send successful response
