@@ -31,10 +31,6 @@ const options = {
 app.use(morgan(morganOption));
 app.use(cors());
 app.use(helmet());
-
-app.get('/', (req, res) => {
-  res.json({ message: 'Hello, world!' });
-});
 app.use('/api/login', authRouter);
 app.use('/api/register', usersRouter);
 app.use('/api/prescriptions', prescriptionsRouter);

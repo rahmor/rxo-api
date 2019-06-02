@@ -5,10 +5,6 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 
 const AuthService = {
-  getUsers(knex) {
-    return knex('users').select('*');
-  },
-
   getUserWithUserName(knex, user_name) {
     return knex
       .from('users')
