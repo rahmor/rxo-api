@@ -43,5 +43,3 @@ loginRouter.post('/', jsonBodyParser, (req, res, next) => {
 });
 
 module.exports = loginRouter;
-
-//if true, return jwt token as part of response
