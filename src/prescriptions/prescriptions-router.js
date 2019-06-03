@@ -3,16 +3,30 @@ const express = require('express');
 const prescriptionsRouter = express.Router();
 const jsonBodyParser = express.json();
 const prescriptionsService = require('./prescriptions-service');
+const { requireAuth, getIdFromToken } = require('../middleware/jwt-service');
 
-prescriptionsRouter.get('/:id', (req, res, next) => {
-  prescriptionsService
-    .getUserPrescriptions(req.app.get('db'), req.params.id)
-    .then(response => res.status(200).json({ schedule: response }))
-    .catch(next);
-});
+prescriptionsRouter
+  .route('/:id')
+  .all(requireAuth)
+  .get((req, res, next) => {
+    prescriptionsService
+      .getUserPrescriptions(req.app.get('db'), req.params.id)
+      .then(response => res.status(200).json({ schedule: response }))
+      .catch(next);
+  });
 
-prescriptionsRouter.post('/', jsonBodyParser, (req, res) => {
-  res.status(201).json(req.body);
-});
+prescriptionsRouter
+  .route('/')
+  .all(requireAuth)
+  .post(jsonBodyParser, (req, res) => {
+    const { rx_name, days, times } = req.body;
+    const user_id = getIdFromToken(req.get('Authorization'));
+    const prescription = { rx_name, days, times, user_id };
+    prescriptionsService
+      .addUserPrescriptions(req.app.get('db'), prescription)
+      .then(response => {
+        res.status(201).json({ message: `${rx_name} was added` });
+      });
+  });
 
 module.exports = prescriptionsRouter;
