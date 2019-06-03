@@ -24,7 +24,7 @@ prescriptionsRouter
     PrescriptionsService.addUserPrescriptions(
       req.app.get('db'),
       prescription
-    ).then(response => {
+    ).then(() => {
       res.status(201).json({ message: `${rx_name} was added` });
     });
   });
