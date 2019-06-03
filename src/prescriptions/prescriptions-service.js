@@ -1,6 +1,6 @@
 'use strict';
 
-const PrescritionsService = {
+const PrescriptionsService = {
   getUserPrescriptions(db, id) {
     return db('users')
       .where({ 'users.id': id })
@@ -12,17 +12,25 @@ const PrescritionsService = {
 
   addUserPrescriptions(db, data) {
     const { rx_name, days, times, user_id } = data;
+
     return db('prescriptions')
       .insert({ rx_name, user_id })
       .into('prescriptions')
       .returning('*')
       .then(rx => {
-        //put rx.id into object and then concatenate key value pairs in days and times
-        return db('schedules').insert(
-          { prescription_id: rx[0].id, monday: true },
-          { monday: true }
+        const newSchedule = this.prescriptionsSpreader(
+          days.concat(times).concat([{ prescription_id: rx[0].id }])
         );
-      });
+        return newSchedule;
+      })
+      .then(newSchedule => db('schedules').insert(newSchedule));
+  },
+
+  prescriptionsSpreader(schedule) {
+    let newSchedule = schedule.reduce(function(accumulator, currentValue) {
+      return Object.assign(accumulator, currentValue);
+    }, {});
+    return newSchedule;
   }
 };
-module.exports = PrescritionsService;
+module.exports = PrescriptionsService;
