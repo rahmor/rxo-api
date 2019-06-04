@@ -11,16 +11,18 @@ const PrescriptionsService = {
   },
 
   addUserPrescriptions(db, data) {
-    const { rx_name, days, times, user_id } = data;
+    const { rx_name, day, user_id } = data;
 
     return db('prescriptions')
       .insert({ rx_name, user_id })
       .into('prescriptions')
       .returning('*')
       .then(rx => {
-        const newSchedule = this.prescriptionsSpreader(
-          days.concat(times).concat([{ prescription_id: rx[0].id }])
-        );
+        //turn three string into one object;
+        // const newSchedule = this.prescriptionsSpreader(
+        //   day.concat(time).concat([{ prescription_id: rx[0].id }])
+        // );
+        const newSchedule = { prescription_id: rx[0].id, day: day };
         return newSchedule;
       })
       .then(newSchedule => db('schedules').insert(newSchedule));

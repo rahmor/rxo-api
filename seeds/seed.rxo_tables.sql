@@ -15,7 +15,7 @@ VALUES
 
 INSERT INTO schedules (prescription_id, wednesday, nine)
 VALUES
-  (1,true,true),
-  (2,true,true);
+  (1,'wednesday'),
+  (2,'saturday');
 
 COMMIT;

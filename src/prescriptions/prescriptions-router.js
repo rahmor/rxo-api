@@ -18,9 +18,9 @@ prescriptionsRouter
   .route('/')
   .all(requireAuth)
   .post(jsonBodyParser, (req, res) => {
-    const { rx_name, days, times } = req.body;
+    const { rx_name, day, time } = req.body;
     const user_id = getIdFromToken(req.get('Authorization'));
-    const prescription = { rx_name, days, times, user_id };
+    const prescription = { rx_name, day, time, user_id };
     PrescriptionsService.addUserPrescriptions(
       req.app.get('db'),
       prescription
