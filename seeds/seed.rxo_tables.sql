@@ -13,7 +13,7 @@ VALUES
   ('Vicodin', 1),
   ('Simvastatin',3);
 
-INSERT INTO schedules (prescription_id, wednesday, nine)
+INSERT INTO schedules (prescription_id, day)
 VALUES
   (1,'wednesday'),
   (2,'saturday');
