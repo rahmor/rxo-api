@@ -29,7 +29,7 @@ const options = {
 };
 
 app.use(morgan(morganOption));
-app.use(cors(options));
+app.use(cors());
 app.use(helmet());
 app.use('/api/login', authRouter);
 app.use('/api/register', usersRouter);
