@@ -1,10 +1,10 @@
 'use strict';
 const app = require('../src/app');
-const supertest = require('supertest');
+
 describe('App', () => {
-  it.skip('GET / responds with 200 containing object with value "Hello, world!"', () => {
+  it('GET / responds with 404 containing object with value "Hello, world!"', () => {
     return supertest(app)
       .get('/')
-      .expect(200, { message: 'Hello, world!' });
+      .expect(404);
   });
 });
