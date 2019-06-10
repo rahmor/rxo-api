@@ -2,7 +2,7 @@ const app = require('../src/app');
 const db = require('./test-helpers');
 require('dotenv').config();
 
-describe.only('/API/LOGIN endpoint', () => {
+describe('/API/LOGIN endpoint', () => {
   before('set database connection', () => {
     app.set('db', db);
   });
