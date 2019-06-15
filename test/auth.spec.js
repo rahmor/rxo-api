@@ -1,21 +1,26 @@
 'use strict';
 const app = require('../src/app');
-const db = require('./test-helpers');
-require('dotenv').config();
+const { getDB, createUser, clearTables } = require('./test-helpers');
 
-describe('/API/LOGIN endpoint', () => {
-  before('set database connection', () => {
+describe.only('/API/LOGIN endpoint', () => {
+  let db;
+  const user = {
+    user_name: 'testuser',
+    user_password: 'testuserpassword'
+  };
+
+  before('set database connection and create user', () => {
+    db = getDB();
     app.set('db', db);
+    clearTables(db);
+    return createUser(user, db);
   });
 
-  after('disconnect from db', () => db.destroy());
+  after('disconnect from db', () => {
+    clearTables(db).then(() => db.destroy());
+  });
 
   it('POST should return 200 with credentials', () => {
-    const user = {
-      user_name: process.env.DB_USER,
-      user_password: process.env.DB_PASSWORD
-    };
-
     return supertest(app)
       .post('/api/login')
       .send(user)

@@ -51,7 +51,7 @@ function createUser(user, db) {
     return db
       .into('users')
       .insert(hashedUser)
-      .then(() => db.raw(`SELECT setval('users_id_seq', ?)`, user.user_id));
+      .then(() => db.raw(`SELECT setval('users_id_seq', 1)`));
   });
 }
 
