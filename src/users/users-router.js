@@ -23,7 +23,7 @@ registrationRouter.post('/', jsonBodyParser, (req, res) => {
       return (user_password = UserService.hashPassword(user_password));
     })
     .then(password => {
-      UserService.saveUser(req.app.get('db'), user_name, password).then(
+      return UserService.saveUser(req.app.get('db'), user_name, password).then(
         response =>
           res.status(201).json({
             message: `Registation successful for ${response.user_name}`

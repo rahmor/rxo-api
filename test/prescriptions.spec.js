@@ -23,8 +23,8 @@ describe('/API/PRESCRIPTIONS endpoint', () => {
   });
 
   after('disconnect from db', () => {
-    clearTables(db).then(response => {
-      db.destroy();
+    return clearTables(db).then(response => {
+      return db.destroy();
     });
   });
 

@@ -2,7 +2,7 @@
 const app = require('../src/app');
 const { getDB, createUser, clearTables } = require('./test-helpers');
 
-describe.only('/API/LOGIN endpoint', () => {
+describe('/API/LOGIN endpoint', () => {
   let db;
   const user = {
     user_name: 'testuser',
@@ -17,7 +17,9 @@ describe.only('/API/LOGIN endpoint', () => {
   });
 
   after('disconnect from db', () => {
-    clearTables(db).then(() => db.destroy());
+    return clearTables(db).then(response => {
+      return db.destroy();
+    });
   });
 
   it('POST should return 200 with credentials', () => {
