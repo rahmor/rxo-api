@@ -1,19 +1,31 @@
+'use strict';
 const app = require('../src/app');
-require('dotenv').config();
-const knex = require('knex');
+const { getDB, clearTables } = require('./test-helpers');
 
-describe.only('/API/REGISTER endpoint', () => {
+describe('/API/REGISTER endpoint', () => {
+  let db;
+
   before('set database connection', () => {
-    db = knex({ client: 'pg', connection: process.env.TEST_DB_URL });
+    db = getDB();
     app.set('db', db);
+  });
+
+  //before truncate database;
+  beforeEach('clear tables', () => {
+    clearTables(db);
   });
 
   after('disconnect from db', () => db.destroy());
 
+  //afterEach, truncate table
+  afterEach('clear user table', () => {
+    clearTables(db);
+  });
+
   it('POST should return 201 with credentials', () => {
     const user = {
-      user_name: 'testuser',
-      user_password: 'testuserpassword'
+      user_name: 'user1',
+      user_password: 'user1234'
     };
 
     return supertest(app)

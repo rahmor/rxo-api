@@ -1,3 +1,4 @@
+'use strict';
 const app = require('../src/app');
 const db = require('./test-helpers');
 require('dotenv').config();
