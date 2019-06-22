@@ -3,13 +3,14 @@ const express = require('express');
 const prescriptionsRouter = express.Router();
 const jsonBodyParser = express.json();
 const PrescriptionsService = require('./prescriptions-service');
-const { requireAuth, getIdFromToken } = require('../middleware/jwt-service');
+const { requireAuth, correctUserId } = require('../middleware/jwt-service');
 
 //get id from req.user if id matches route id send data, false send
 //response unauthized for this data.
 prescriptionsRouter
   .route('/:id')
   .all(requireAuth)
+  .all(correctUserId)
   .get((req, res, next) => {
     PrescriptionsService.getUserPrescriptions(req.app.get('db'), req.params.id)
       .then(response => res.status(200).json({ schedule: response }))

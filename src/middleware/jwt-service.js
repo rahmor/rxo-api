@@ -7,6 +7,8 @@ function getIdFromToken(token) {
   return user_id;
 }
 
+function correctUserId(req, res, next) {}
+
 function requireAuth(req, res, next) {
   const authToken = req.get('Authorization') || '';
 
@@ -40,5 +42,6 @@ function requireAuth(req, res, next) {
 
 module.exports = {
   requireAuth,
-  getIdFromToken
+  getIdFromToken,
+  correctUserId
 };
