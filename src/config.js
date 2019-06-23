@@ -7,5 +7,4 @@ module.exports = {
   DB_URL: process.env.DB_URL,
   TEST_DB_URL: process.env.TEST_DB_URL,
   JWT_SECRET: process.env.JWT_SECRET
-  // DATABASE_URL: process.env.DATABASE_URL
 };
