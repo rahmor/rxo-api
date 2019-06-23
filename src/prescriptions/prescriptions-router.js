@@ -5,8 +5,6 @@ const jsonBodyParser = express.json();
 const PrescriptionsService = require('./prescriptions-service');
 const { requireAuth, correctUserId } = require('../middleware/jwt-service');
 
-//get id from req.user if id matches route id send data, false send
-//response unauthized for this data.
 prescriptionsRouter
   .route('/:id')
   .all(requireAuth)

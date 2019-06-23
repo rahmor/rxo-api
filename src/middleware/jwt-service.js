@@ -7,7 +7,17 @@ function getIdFromToken(token) {
   return user_id;
 }
 
-function correctUserId(req, res, next) {}
+function correctUserId(req, res, next) {
+  const authToken = req.get('Authorization');
+  let bearerToken = authToken.slice(7, authToken.length);
+  const user_id = getIdFromToken(bearerToken);
+
+  if (user_id == req.params.id) {
+    next();
+  } else {
+    return res.status(401).json({ error: 'Unauthorized request' });
+  }
+}
 
 function requireAuth(req, res, next) {
   const authToken = req.get('Authorization') || '';
